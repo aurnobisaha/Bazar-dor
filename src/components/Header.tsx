@@ -3,14 +3,19 @@ import Image from "next/image";
 import Link from "next/link";
 import NavLinks from "./NavLinks";
 import { connection } from "next/server";
+import { useSession } from "@/lib/auth-client";
 
 const Header = async () => {
     await connection();
 
     const date = new Date().toLocaleDateString("bn-BD", {
-        dateStyle: "full"
+       weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
     });
-
+    //const {data,isPending}=useSession();
+    // const handleSignOut=async()=>{};
     return (
         <header className="w-full bg-[#F8FAF9] border border-gray-200">
             <div className="max-w-5xl mx-auto px-4 py-2 flex items-center justify-between">
