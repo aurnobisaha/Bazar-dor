@@ -14,45 +14,44 @@ import { signIn } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 export default function SignInPage() {
-  const onSubmit =async (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
-    const { data:resData, error } = await signIn.email({
-    email: data.email as string , // required, The email address of the user.
-    password: data.password as string, // required, The password of the user. It should be at least 8 characters long and max 128 by default.
+    const { data: resData, error } = await signIn.email({
+      email: data.email as string,
+      password: data.password as string,
+      callbackURL: "/",
+    });
 
-    callbackURL: "/", // An optional URL to redirect to after the user signs in. (optional)
-});
-     if(error){
-      toast.error(error.message as string)
-     }
-    
+    if (error) {
+      toast.error(error.message || "সাইন ইন ব্যর্থ হয়েছে");
+    }
   };
-  const handleGoogleSignIn=async()=>{
-     const data = await signIn.social({
-    provider: "google",
-  });
-  console.log(data);
+
+  const handleGoogleSignIn = async () => {
+    const data = await signIn.social({
+      provider: "google",
+    });
+    console.log(data);
   };
 
   const handleGithubSignIn = async () => {
-  const { data, error } = await signIn.social({
-    provider: "github",
-    callbackURL: "/",
-  });
+    const { data, error } = await signIn.social({
+      provider: "github",
+      callbackURL: "/",
+    });
 
-  if (error) {
-    toast.error(error.message);
-  }
-};
+    if (error) {
+      toast.error(error.message || "GitHub login failed");
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#F0F6F1] px-4 py-10">
       <div className="mx-auto max-w-md">
-
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-[#26382C]">
             সাইন ইন
@@ -64,7 +63,6 @@ export default function SignInPage() {
         </div>
 
         <div className="rounded-2xl border border-[#E5ECE6] bg-white p-6 shadow-sm">
-
           <Form
             className="flex flex-col gap-4"
             onSubmit={onSubmit}
@@ -115,11 +113,10 @@ export default function SignInPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-
             <Button
               type="button"
               onClick={handleGoogleSignIn}
-              variant="bordered"
+              variant="outline"
               className="h-auto min-h-11 gap-2 border-gray-200 px-2 py-3 text-xs text-gray-700"
             >
               <svg viewBox="0 0 48 48" className="h-4 w-4">
@@ -148,8 +145,8 @@ export default function SignInPage() {
 
             <Button
               type="button"
-                onClick={handleGithubSignIn}
-              variant="bordered"
+              onClick={handleGithubSignIn}
+              variant="outline"
               className="h-auto min-h-11 gap-2 border-gray-200 px-2 py-3 text-xs text-gray-700"
             >
               <svg
@@ -160,7 +157,6 @@ export default function SignInPage() {
               </svg>
               GitHub দিয়ে চালিয়ে যান
             </Button>
-
           </div>
 
           <p className="mt-5 text-center text-sm text-gray-600">
@@ -172,7 +168,6 @@ export default function SignInPage() {
               সাইন আপ করুন
             </Link>
           </p>
-
         </div>
 
         <Link
@@ -181,8 +176,8 @@ export default function SignInPage() {
         >
           ← হোম পেজে ফিরে যান
         </Link>
-
       </div>
     </main>
   );
 }
+

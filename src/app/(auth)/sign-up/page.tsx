@@ -16,9 +16,10 @@ import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const router = useRouter();
+
   const onSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.currentTarget);
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
@@ -35,29 +36,28 @@ export default function SignUpPage() {
       password: data.password as string,
       name: data.name as string,
     });
-    //console.log(resData,error);
+
     if (error) {
       toast.error(error.message || "Account creation failed");
       return;
     }
-    if (resData?.user.name) {
-      toast.success('অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!')
-      router.push('/sign-in')
-    }
 
-    
+    if (resData?.user.name) {
+      toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!");
+      router.push("/sign-in");
+    }
   };
-  const handleGoogleSignIn=async()=>{
-     const data = await signIn.social({
-    provider: "google",
-  });
-  console.log(data);
+
+  const handleGoogleSignIn = async () => {
+    const data = await signIn.social({
+      provider: "google",
+    });
+    console.log(data);
   };
 
   return (
     <main className="min-h-screen bg-[#F0F6F1] px-4 py-10">
       <div className="mx-auto max-w-md">
-
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-[#26382C]">
             অ্যাকাউন্ট তৈরি করুন
@@ -69,7 +69,6 @@ export default function SignUpPage() {
         </div>
 
         <div className="rounded-2xl border border-[#E5ECE6] bg-white p-6 shadow-sm">
-
           <Form
             className="flex flex-col gap-4"
             onSubmit={onSubmit}
@@ -136,11 +135,10 @@ export default function SignUpPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-
             <Button
               type="button"
               onClick={handleGoogleSignIn}
-              variant="bordered"
+              variant="outline"
               className="h-auto min-h-11 gap-2 border-gray-200 px-2 py-3 text-xs text-gray-700"
             >
               <svg viewBox="0 0 48 48" className="h-4 w-4">
@@ -155,15 +153,15 @@ export default function SignUpPage() {
             <Button
               type="button"
               onClick={async () => {
-    const { error } = await signIn.social({
-        provider: "github",
-    });
+                const { error } = await signIn.social({
+                  provider: "github",
+                });
 
-    if (error) {
-        toast.error("GitHub login failed!");
-    }
-}}
-              variant="bordered"
+                if (error) {
+                  toast.error("GitHub login failed!");
+                }
+              }}
+              variant="outline"
               className="h-auto min-h-11 gap-2 border-gray-200 px-2 py-3 text-xs text-gray-700"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
@@ -171,7 +169,6 @@ export default function SignUpPage() {
               </svg>
               GitHub দিয়ে চালিয়ে যান
             </Button>
-
           </div>
 
           <p className="mt-5 text-center text-sm text-gray-600">
@@ -183,7 +180,6 @@ export default function SignUpPage() {
               সাইন ইন করুন
             </Link>
           </p>
-
         </div>
 
         <Link
@@ -192,11 +188,11 @@ export default function SignUpPage() {
         >
           ← হোম পেজে ফিরে যান
         </Link>
-
       </div>
     </main>
   );
 }
+
 
 
 

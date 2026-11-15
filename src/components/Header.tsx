@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import Image from "next/image";
@@ -10,10 +9,17 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
 
-const HeaderClient = ({ date }: { date: string }) => {
+const HeaderClient = () => {
     const { data, isPending } = useSession();
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
+
+    const date = new Intl.DateTimeFormat("bn-BD", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    }).format(new Date());
 
     const handleSignOut = async () => {
         const { error } = await signOut();
@@ -51,7 +57,10 @@ const HeaderClient = ({ date }: { date: string }) => {
                             বাজার দর
                         </h2>
 
-                        <p className="text-[9px] text-gray-600">
+                        <p
+                            className="text-[9px] text-gray-600"
+                            suppressHydrationWarning
+                        >
                             {date}
                         </p>
                     </div>
@@ -108,8 +117,6 @@ const HeaderClient = ({ date }: { date: string }) => {
                                         প্রোফাইল
                                     </Link>
 
-                                   
-
                                     <div className="border-t border-gray-200"></div>
 
                                     <button
@@ -158,3 +165,5 @@ const HeaderClient = ({ date }: { date: string }) => {
 };
 
 export default HeaderClient;
+
+
