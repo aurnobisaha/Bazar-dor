@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
+import { Suspense } from "react";
 
 const notoSeriesBengali = Noto_Serif_Bengali({
   subsets: ["latin", "bengali"],
@@ -25,10 +26,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${notoSeriesBengali.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Header />
+        <Suspense fallback={<div className="h-20" />}>
+          <Header />
+        </Suspense>
+
         <main>
-        {children}
+          {children}
         </main>
+
         <Toaster />
         <Footer />
       </body>
