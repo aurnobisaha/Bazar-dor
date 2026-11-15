@@ -154,6 +154,15 @@ export default function SignUpPage() {
 
             <Button
               type="button"
+              onClick={async () => {
+    const { error } = await signIn.social({
+        provider: "github",
+    });
+
+    if (error) {
+        toast.error("GitHub login failed!");
+    }
+}}
               variant="bordered"
               className="h-auto min-h-11 gap-2 border-gray-200 px-2 py-3 text-xs text-gray-700"
             >

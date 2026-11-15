@@ -38,6 +38,17 @@ export default function SignInPage() {
   console.log(data);
   };
 
+  const handleGithubSignIn = async () => {
+  const { data, error } = await signIn.social({
+    provider: "github",
+    callbackURL: "/",
+  });
+
+  if (error) {
+    toast.error(error.message);
+  }
+};
+
   return (
     <main className="min-h-screen bg-[#F0F6F1] px-4 py-10">
       <div className="mx-auto max-w-md">
@@ -137,6 +148,7 @@ export default function SignInPage() {
 
             <Button
               type="button"
+                onClick={handleGithubSignIn}
               variant="bordered"
               className="h-auto min-h-11 gap-2 border-gray-200 px-2 py-3 text-xs text-gray-700"
             >
